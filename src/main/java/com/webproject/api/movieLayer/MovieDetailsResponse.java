@@ -23,6 +23,21 @@ public class MovieDetailsResponse {
 	private double imdbRating ;
 	
 	private String movieCategory ;
+	
+	private String movieBanerUrl;
+
+	private String movieImageUrl;
+
+	private int downloads;
+	
+
+	public int getDownloads() {
+		return downloads;
+	}
+
+	public void setDownloads(int downloads) {
+		this.downloads = downloads;
+	}
 
 	public String getMovieCategory() {
 		return movieCategory;
@@ -89,4 +104,19 @@ public class MovieDetailsResponse {
 		this.imdbRating = imdbRating;
 	}
 
+	public String getMovieBanerUrl() {
+		return movieBanerUrl;
+	}
+
+	public void setMovieBanerUrl(String movieBanerUrl) {
+		this.movieBanerUrl = movieBanerUrl;
+	}
+
+	public String getMovieImageUrl() {
+		return movieImageUrl;
+	}
+
+	public void setMovieImageUrl(String movieImageUrl) {
+		this.movieImageUrl = movieImageUrl;
+	}
 }

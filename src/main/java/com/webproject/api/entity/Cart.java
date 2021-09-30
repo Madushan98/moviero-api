@@ -1,6 +1,5 @@
 package com.webproject.api.entity;
 
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,20 +23,27 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @Entity
 @Table(name = "cart")
 public class Cart {
-	
-	
+
 	public Cart() {
-		Total = 0.00 ;
+		Total = 0.00;
 		inCart = new ArrayList<Movie>();
 	}
-	
+
 	@Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id")
-    private Long id;
-	
-	
-	
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "id")
+	private Long id;
+
+	@OneToOne(mappedBy = "cart")
+	@JsonIgnoreProperties(value = { "cart", "handler", "hibernateLazyInitializer" }, allowSetters = true)
+	private UserModel user;
+
+	@ManyToMany()
+	@JoinTable(name = "movie_incart", joinColumns = @JoinColumn(name = "movieId"), inverseJoinColumns = @JoinColumn(name = "cartId"))
+	private List<Movie> inCart;
+
+	@Column(nullable = false)
+	private Double Total;
 
 	public UserModel getUser() {
 		return user;
@@ -51,10 +57,6 @@ public class Cart {
 		return Total;
 	}
 
-	public void setTotal(Double total) {
-		Total = total;
-	}
-
 	public List<Movie> getInCart() {
 		return inCart;
 	}
@@ -63,33 +65,70 @@ public class Cart {
 		this.inCart = inCart;
 	}
 
-	@OneToOne(mappedBy = "cart")
-	@JsonIgnoreProperties(value = {"cart", "handler","hibernateLazyInitializer"}, allowSetters = true)
-	private UserModel user;
-	
-    
-    
-	@Column(nullable = false)
-	private Double Total ;
-	
-	  @ManyToMany(cascade = CascadeType.ALL)
-	    @JoinTable(name = "movie_incart", 
-	      joinColumns = @JoinColumn(name = "movieId"), 
-	      inverseJoinColumns = @JoinColumn(name = "cartId"
-	      ))
-	    private List<Movie> inCart;
-	
-	  public void addToCart(Movie movie) {
-		  inCart.add(movie);
-	  }
-	  
-	  
-	  
-	  public Long getId() {
-			return id;
+	public void addToCart(Movie movie) {
+		inCart.add(movie);
+	}
+
+	public Double addToTotal(Double moviePrice) {
+
+		this.Total += moviePrice;
+
+		return Total;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public Boolean isMovieInCart(String movieId) {
+
+		for (Movie movie : this.inCart) {
+
+			String id = movie.getMovieId();
+
+			if (id.equals(movieId)) {
+
+				return true;
+			}
+
 		}
 
-		public void setId(Long id) {
-			this.id = id;
+		return false;
+
+	}
+
+	public void removefromCart(String movieId) {
+
+		List<Movie> newCart = new ArrayList<>();
+
+		for (Movie movie : this.inCart) {
+
+			String id = movie.getMovieId();
+
+			if (!id.equals(movieId)) {
+
+				newCart.add(movie);
+
+			}
+
 		}
+
+		this.inCart = newCart;
+
+	}
+
+	public void setTotal(Double total) {
+		Total = total;
+	}
+
+	public Double removeFromTotal(Double moviePrice) {
+
+		this.Total -= moviePrice;
+
+		return Total;
+	}
 }

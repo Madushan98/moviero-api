@@ -11,6 +11,7 @@ import java.util.Set;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -21,6 +22,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.webproject.api.entity.*;
+import com.webproject.api.exceptions.UserServiceExeception;
+import com.webproject.api.movieLayer.MovieDto;
 import com.webproject.api.repository.RoleRepository;
 import com.webproject.api.repository.UserRepository;
 import com.webproject.api.shared.Utils;
@@ -43,28 +46,44 @@ public class UserServiceImplementation implements UserService {
 	BCryptPasswordEncoder bCryptPasswordEncoder;
 
 	@Override
-	public UserDto createUser(UserDto user) {
+	public UserDto createUser(UserDto user) throws Exception{
+		
+		UserModel isUserAvailable = userRepository.findByEmail(user.getEmail());
+
+		if(isUserAvailable != null) {
+			throw new UserServiceExeception("E-mail is Already Taken");
+		}
 
 		UserModel userEntity = new UserModel();
 		BeanUtils.copyProperties(user, userEntity);
-
+		
 		String userId = utils.generateUserId(30);
 
 		userEntity.setUserId(userId);
 		userEntity.setEncryptedPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+		
+		
 
-		if (roleRepository.count() == 0) {
+		if(roleRepository.count() == 0){
 			Role customer = new Role();
 			customer.setName("ROLE_CUSTOMER");
 
 			Role admin = new Role();
 			admin.setName("ROLE_ADMIN");
 			roleRepository.save(admin);
-			roleRepository.save(customer);
+			roleRepository.save(customer);	
 		}
+		
+		
+	
 		List<Role> roleList = new ArrayList<Role>();
+		
+	
 
 		roleList.add(roleRepository.getRoleByName("ROLE_CUSTOMER"));
+		roleList.add(roleRepository.getRoleByName("ROLE_ADMIN"));  //only for development to show the admin side when initializing every user gets admin acess
+		
+		
 		
 		userEntity.setRoles(roleList);
 		
@@ -176,13 +195,37 @@ public class UserServiceImplementation implements UserService {
 		
 		for(Role role : userRoles) {
 			
-			
+			roleName.add(role.getName());
 			
 			
 			
 		}
 		
+		
+		returnUser.setUserRole(roleName);
+		
 		return returnUser;
+	}
+
+	@Override
+	public List<UserDto> getAllUsers() {
+		
+		List<UserDto> userDtos = new ArrayList<UserDto>();
+		
+		List<UserModel> users = userRepository.findAll();
+		
+		
+		for (UserModel user : users) {
+			UserDto userDto = new UserDto();
+			BeanUtils.copyProperties(user, userDto);
+			
+			
+			userDtos.add(userDto );
+		}
+	 
+		
+		
+		return userDtos;
 	}
 
 }

@@ -39,8 +39,8 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
 	        .csrf().disable()
 	      
 	        .authorizeRequests()
-	        .antMatchers(HttpMethod.POST, SecurityConstants.SIGN_UP_URL)
-	        .permitAll()
+	       // .antMatchers(HttpMethod.POST, SecurityConstants.SIGN_UP_URL).permitAll()
+	        .antMatchers("/file/download/*",SecurityConstants.SIGN_UP_URL).permitAll()
 	        .antMatchers("/admin/**").hasRole("ADMIN")
 	        .anyRequest().authenticated().and().addFilter(getAuthenticationFilter())
 	        .addFilter(new AuthorizationFilter(authenticationManager()))
@@ -65,7 +65,7 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
 	    {
 	    	final CorsConfiguration configuration = new CorsConfiguration();
 	    
-	    	configuration.setAllowedOrigins(List.of("http://localhost:3000","https://you.server.domain.com"));
+	    	configuration.setAllowedOrigins(List.of("http://localhost:3000","https://you.server.domain.com","http://localhost:3001"));
 	    	configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE","OPTIONS"));
 	    	configuration.setAllowCredentials(true);
 	    	configuration.setAllowedHeaders(Arrays.asList("*"));

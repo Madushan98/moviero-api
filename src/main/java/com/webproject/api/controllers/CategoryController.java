@@ -1,6 +1,6 @@
 package com.webproject.api.controllers;
 
-import java.time.LocalDate;
+
 import java.util.List;
 
 import org.springframework.beans.BeanUtils;
@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.webproject.api.categoryLayer.CategoryDetailResponse;
+import com.webproject.api.categoryLayer.CategoryService;
 import com.webproject.api.entity.*;
 import com.webproject.api.repository.*;
 import com.webproject.api.userLayer.*;
@@ -24,18 +26,18 @@ import com.webproject.api.movieLayer.*;
 public class CategoryController {
 	
 	@Autowired
-	CategoryRepository categoryRepository ;
+	CategoryService categoryService ;
 	
 	@Autowired
 	MovieService movieService ;
 	
 
 	@PostMapping
-	public Category createCategory(@RequestBody String categoryName) {
+	public CategoryDetailResponse createCategory(@RequestBody Category category) {
 		
-		Category newCategory = new Category(categoryName);
 		
-		Category returnCategory = categoryRepository.save(newCategory);
+		
+		CategoryDetailResponse returnCategory = categoryService.save(category);
 		
 		
 		
@@ -48,13 +50,9 @@ public class CategoryController {
 		
 		
 		
-		Category deleteCategory = categoryRepository.getCategoryByCategoryName(name) ;
+		CategoryDetailResponse deleteCategory = categoryService.deleteByCategoryName(name) ;
 		
-		if(deleteCategory == null) {
-			throw new UsernameNotFoundException(name);
-		}
 		
-		categoryRepository.delete(deleteCategory);
 		
 		return "User Deleted SuccesFully";
 		
@@ -62,28 +60,17 @@ public class CategoryController {
 	
 	
 	@GetMapping
-	public List<Category> getAllCategories() {
+	public List<CategoryDetailResponse> getAllCategories() {
 	
-		List<Category> allCategories = categoryRepository.findAll();
+		List<CategoryDetailResponse> allCategories = categoryService.findAll();
+		
+		
+		
 
 		return allCategories ;
 	}
 	
-	@GetMapping(path="/{category}")
-	public List<MovieDetailsResponse> getMovies(@PathVariable String category){
-		
-		Category retriveCategory = categoryRepository.getCategoryByCategoryName(category) ;
-		
-		
-		
-		
-	
-		
-		return null;
-		
-		
-		
-	}
+
 	
 	
 }

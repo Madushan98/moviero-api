@@ -1,6 +1,5 @@
 package com.webproject.api.entity;
 
-
 import java.time.LocalDate;
 import java.io.Serializable;
 import java.util.List;
@@ -32,50 +31,61 @@ public class Movie implements Serializable {
 	@Column(nullable = false)
 	private String movieId;
 
-	// @Column(nullable=false, length=50)
-	private String movieUrl;
+
+	private String movieVideoUrl;
+
+	
+	private String movieBanerUrl;
+
+
+	private String movieImageUrl;
 
 	@Column(nullable = false, length = 50)
 	private String title;
 
-	@Column(columnDefinition = "TEXT",nullable=false,length = 4000)
+	@Column(columnDefinition = "TEXT", nullable = false, length = 4000)
 	private String description;
 
 	@Column(nullable = false)
 	private Double moviePrice;
-	
 
-	 @ManyToOne(fetch = FetchType.LAZY)
-	    @JoinColumn(name = "movie_category", nullable = false )
-	    private Category category;
-	
-	 
-	@Column(nullable = false) 
-	private double imdbRating ;
-	 
-	 
-	 
+	@Column(nullable = false)
+	private int downloads;
+
+	@Column(nullable = false)
+	private double imdbRating;
+
+	@ManyToOne(fetch = FetchType.LAZY )
+	@JoinColumn(name = "movie_category", nullable = true)
+	private Category category;
+
+	@ManyToMany(mappedBy = "inCart", fetch = FetchType.LAZY)
+	@JsonIgnoreProperties("inCart")
+	private List<Cart> carts;
+
+	@ManyToMany(mappedBy = "moviesPurchesed", fetch = FetchType.LAZY)
+	@JsonIgnoreProperties("moviesPurchesed")
+	private List<StreamPurcheses> purcheses;
+
 	public Category getCategory() {
 		return category;
 	}
-	
+
 	public String getNameCategory() {
-		return category.getCategoryName() ;
+		return category.getCategoryName();
 	}
 
 	public void setCategory(Category category) {
 		this.category = category;
 	}
 
-	//@Column(nullable = false)
-	private LocalDate releaseDate ;
-	
-	//@Column(nullable = false)
-	private LocalDate addToMoviesDate ;
-	
-	
+	// @Column(nullable = false)
+	private LocalDate releaseDate;
 
-	 public LocalDate getAddToMoviesDate() {
+	// @Column(nullable = false)
+	private LocalDate addToMoviesDate;
+
+	public LocalDate getAddToMoviesDate() {
 		return addToMoviesDate;
 	}
 
@@ -91,10 +101,6 @@ public class Movie implements Serializable {
 		this.releaseDate = releaseDate;
 	}
 
-	@ManyToMany(mappedBy = "inCart" ,fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	 @JsonIgnoreProperties("inCart")
-	 private List<Cart> carts ; 
-
 	public String getMovieId() {
 		return movieId;
 	}
@@ -103,15 +109,13 @@ public class Movie implements Serializable {
 		this.movieId = movieId;
 	}
 
-	public String getMovieUrl() {
-		return movieUrl;
+	public long getId() {
+		return id;
 	}
 
-	public void setMovieUrl(String movieUrl) {
-		this.movieUrl = movieUrl;
+	public void setId(long id) {
+		this.id = id;
 	}
-
-	
 
 	public String getTitle() {
 		return title;
@@ -145,6 +149,56 @@ public class Movie implements Serializable {
 		this.imdbRating = imdbRating;
 	}
 
+	public String getMovieVideoUrl() {
+		return movieVideoUrl;
+	}
+
+	public void setMovieVideoUrl(String movieVideoUrl) {
+		this.movieVideoUrl = movieVideoUrl;
+	}
+
+	public String getMovieBanerUrl() {
+		return movieBanerUrl;
+	}
+
+	public void setMovieBanerUrl(String movieBanerUrl) {
+		this.movieBanerUrl = movieBanerUrl;
+	}
+
+	public String getMovieImageUrl() {
+		return movieImageUrl;
+	}
+
+	public void setMovieImageUrl(String movieImageUrl) {
+		this.movieImageUrl = movieImageUrl;
+	}
+
+	public int getDownloads() {
+		return downloads;
+	}
+
+	public void setDownloads(int downloads) {
+		this.downloads = downloads;
+	}
+	
+	
+	public void increaceDownloads() {
+		this.downloads += 1 ;
+		
+	}
+
+	public List<Cart> getCarts() {
+		return carts;
+	}
+
+
+	public List<StreamPurcheses> getPurcheses() {
+		return purcheses;
+	}
+
+
+	public void EmptyCarts() {
+		this.carts = null ;
+	}
 	
 }
-

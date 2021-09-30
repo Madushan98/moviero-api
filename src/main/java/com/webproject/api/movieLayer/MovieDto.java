@@ -11,7 +11,6 @@ import javax.persistence.ManyToOne;
 
 import com.webproject.api.entity.Cart;
 
-
 public class MovieDto implements Serializable {
 
 	private static final long serialVersionUID = -4652777307512175027L;
@@ -20,23 +19,38 @@ public class MovieDto implements Serializable {
 
 	private String movieId;
 
-	private String movieUrl;
+	private String movieVideoUrl;
+
+	private String movieBanerUrl;
+
+	
+
+	private String movieImageUrl;
 
 	private String title;
 
 	private String description;
-	
-	private String movieCategory ;
-	
-	private double imdbRating ;
-	
-	
+
+	private String movieCategory;
+
+	private double imdbRating;
 
 	private Cart cart;
 
 	private LocalDate releaseDate;
 
 	private LocalDate addToMoviesDate;
+
+	private int downloads;
+	
+	
+	public int getDownloads() {
+		return downloads;
+	}
+
+	public void setDownloads(int downloads) {
+		this.downloads = downloads;
+	}
 
 	public String getMovieCategory() {
 		return movieCategory;
@@ -47,7 +61,6 @@ public class MovieDto implements Serializable {
 	}
 
 	private Double moviePrice;
-
 
 	public LocalDate getReleaseDate() {
 		return releaseDate;
@@ -71,14 +84,6 @@ public class MovieDto implements Serializable {
 
 	public void setMovieId(String movieId) {
 		this.movieId = movieId;
-	}
-
-	public String getMovieUrl() {
-		return movieUrl;
-	}
-
-	public void setMovieUrl(String movieUrl) {
-		this.movieUrl = movieUrl;
 	}
 
 
@@ -120,6 +125,30 @@ public class MovieDto implements Serializable {
 
 	public void setImdbRating(double imdbRating) {
 		this.imdbRating = imdbRating;
+	}
+	
+	public String getMovieVideoUrl() {
+		return movieVideoUrl;
+	}
+
+	public void setMovieVideoUrl(String movieVideoUrl) {
+		this.movieVideoUrl = movieVideoUrl;
+	}
+
+	public String getMovieBanerUrl() {
+		return movieBanerUrl;
+	}
+
+	public void setMovieBanerUrl(String movieBanerUrl) {
+		this.movieBanerUrl = movieBanerUrl;
+	}
+
+	public String getMovieImageUrl() {
+		return movieImageUrl;
+	}
+
+	public void setMovieImageUrl(String movieImageUrl) {
+		this.movieImageUrl = movieImageUrl;
 	}
 
 }

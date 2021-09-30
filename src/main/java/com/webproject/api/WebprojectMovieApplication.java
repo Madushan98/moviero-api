@@ -18,6 +18,8 @@ public class WebprojectMovieApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(WebprojectMovieApplication.class, args);
+		
+		
 	}
 
 
@@ -38,15 +40,5 @@ public class WebprojectMovieApplication {
 	}
 	
 	
-//	@Bean
-//	public WebMvcConfigurer corsConfigurer() {
-//		return new WebMvcConfigurer() {
-//			@Override
-//			public void addCorsMappings(CorsRegistry registry) {
-//				registry.addMapping("/users").allowedOrigins("http://localhost:3000");
-//				registry.addMapping("/users/login").allowedOrigins("http://localhost:3000");
-//				
-//			}
-//		};
-//	}
+
 }

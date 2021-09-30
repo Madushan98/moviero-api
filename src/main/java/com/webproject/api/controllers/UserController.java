@@ -1,7 +1,10 @@
 package com.webproject.api.controllers;
+import java.util.List;
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -10,7 +13,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.webproject.api.cartLayer.CartDetailResponse;
+import com.webproject.api.cartLayer.CartService;
 import com.webproject.api.entity.*;
+import com.webproject.api.exceptions.MovieServiceException;
+import com.webproject.api.purchesLayer.PurchesMoviesRequest;
+import com.webproject.api.purchesLayer.StreamPurchesDetailResponse;
+import com.webproject.api.purchesLayer.StreamPurchesService;
+
 import com.webproject.api.repository.*;
 import com.webproject.api.userLayer.*;
 
@@ -34,6 +44,16 @@ public class UserController {
 	@Autowired
 	CartRepository cartRepository ;
 	
+	
+	@Autowired
+	StreamPurchesRepository streamRepository ;
+	
+	@Autowired
+	StreamPurchesService streamService;
+	
+	@Autowired
+	CartService cartService;
+	
 @GetMapping	
 public String GetUser() {
 	
@@ -43,7 +63,7 @@ public String GetUser() {
 
 
 @PostMapping
-public UserDetailResponse CreateUser(@RequestBody UserDetailRequestModel userDetail) {
+public UserDetailResponse CreateUser(@RequestBody UserDetailRequestModel userDetail) throws Exception {
 	
 	UserDetailResponse userResponse = new UserDetailResponse();	
 	
@@ -64,25 +84,11 @@ public UserDetailResponse CreateUser(@RequestBody UserDetailRequestModel userDet
 }
 
 
-@PutMapping(path = "/{userId}/cart/{movieId}")
- public Cart AddToCart(@PathVariable (value = "userId") String userId,@PathVariable (value = "movieId") String movieId ) {
-	
-	Movie movie = movieRepository.findByMovieId(movieId) ;
-	
-	UserModel user = userRepository.findByUserId(userId);
-	
-	Cart cart = cartRepository.getById(user.getCardId());
-	
-	cart.addToCart(movie);
-	
-	
-	
-	
-	
-	
-	return cartRepository.save(cart);
-	
-}
+
+
+
+
+
 
 @GetMapping(path="/{id}")
 public UserDetailResponse  GetUser(@PathVariable String id) {
@@ -113,6 +119,76 @@ public UserDetailResponse UserDetailUpdate(@PathVariable  String id, @RequestBod
 	return returnUser;
 	
 }
+
+
+
+@PutMapping(path = "/{userId}/cart/{movieId}")
+public String AddToCart(@PathVariable (value = "userId") String userId,@PathVariable (value = "movieId") String movieId )throws Exception {
+	
+	String returnMessage = cartService.AddToCart(movieId, userId);
+	
+	return returnMessage ;
+	
+}
+
+
+@DeleteMapping(path = "/{userId}/cart/{movieId}") 
+public CartDetailResponse RemoveFromCart(@PathVariable (value = "userId") String userId,@PathVariable (value = "movieId") String movieId ) throws Exception {
+		
+	String returnMessage = cartService.removeFromCart(movieId, userId);
+	
+	CartDetailResponse returnCart = cartService.getCart(userId);
+	
+	return returnCart;
+	
+}
+
+
+
+@GetMapping(path="/{userId}/cart")
+public CartDetailResponse GetUserCartDetails(@PathVariable String userId) {
+	
+	
+	CartDetailResponse returnCart = cartService.getCart(userId);
+
+	
+	
+	return returnCart;
+	
+}
+
+
+@GetMapping(path="/{userId}/purches")
+public StreamPurchesDetailResponse GetUserPurchesDetails(@PathVariable String userId) {
+	
+	
+	StreamPurchesDetailResponse returnStreamDetails = streamService.getStreamDetails(userId);
+
+	
+	
+	return returnStreamDetails;
+	
+}
+
+
+@PutMapping(path="/{userId}/purches")
+public StreamPurchesDetailResponse BuyMovies(@PathVariable String userId ,@RequestBody PurchesMoviesRequest purchesMovies ) {
+	
+	
+	List<String> movies =  purchesMovies.getMovies() ;
+	
+	
+	
+	
+	StreamPurchesDetailResponse returnStreamDetails = streamService.buyMovies(movies,userId);
+
+	
+	
+	return returnStreamDetails ;
+	
+}
+
+
 
 
 }

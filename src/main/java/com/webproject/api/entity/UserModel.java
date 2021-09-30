@@ -46,6 +46,11 @@ public class UserModel  implements Serializable {
     private Cart cart;
 	
 	
+
+	@OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "purches_id", referencedColumnName = "ID")
+    private StreamPurcheses purcheses;
+	
 	@Column(nullable = false, length = 120, unique = true)
 	private String email;
 
@@ -61,8 +66,10 @@ public class UserModel  implements Serializable {
 	private String lastName;
 	
 
-	@ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
 	
+
+
+	@ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
 	@JoinTable(name = "user_role", joinColumns = {
 			@JoinColumn(name = "USER_ID", referencedColumnName = "ID") }, inverseJoinColumns = {
 					@JoinColumn(name = "ROLE_ID", referencedColumnName = "ID") })
@@ -108,6 +115,7 @@ public class UserModel  implements Serializable {
 	public UserModel() {
 		
 		cart = new Cart();
+		purcheses = new StreamPurcheses();
 	}
 	
 	
@@ -166,4 +174,17 @@ public class UserModel  implements Serializable {
 	public Long getCardId() {
 		return cart.getId() ;
 	}
+	
+	
+	public Long getStreamId() {
+		return purcheses.getId() ;
+	}
+	
+	@Override
+	public String toString() {
+		return "UserModel [id=" + id + ", userId=" + userId + ", userName=" + userName + ", cart=" + cart + ", email="
+				+ email + ", encryptedPassword=" + encryptedPassword + ", firstName=" + firstName + ", lastName="
+				+ lastName + ", roles=" + roles + "]";
+	}
+
 }

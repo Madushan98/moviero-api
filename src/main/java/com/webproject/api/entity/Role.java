@@ -2,6 +2,7 @@ package com.webproject.api.entity;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -20,7 +21,7 @@ public class Role {
     @Column(nullable = false, unique = true)
     private String name;
 
-    @ManyToMany(mappedBy = "roles")
+    @ManyToMany(mappedBy = "roles",cascade = CascadeType.ALL)
     @JsonIgnoreProperties(value = {"roles", "handler","hibernateLazyInitializer"}, allowSetters = true)
     private List < UserModel > users;
 

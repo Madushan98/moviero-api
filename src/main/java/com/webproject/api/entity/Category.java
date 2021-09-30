@@ -1,6 +1,7 @@
 package com.webproject.api.entity;
 
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -23,19 +24,24 @@ public class Category {
 	
 	@Column(nullable = false)
 	private String categoryName ;
+
+
 	
-	@OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
+
+	@OneToMany(mappedBy = "category", cascade = CascadeType.DETACH, orphanRemoval = true)
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private List<Movie> movies;
 	
 	
 	public Category() {
-		
+		this.movies = new ArrayList<>();
 	}
 	
-	public Category(String categoryName) {
+	public Category(String categoryName,String categoryUrlPath,String categoryImageUrl) {
 		this.categoryName = categoryName ;
 		this.movies = Collections.emptyList();  
+//		this.categoryUrlpath = categoryUrlPath ;
+//		this.categoryImageUrl = categoryImageUrl ;
 	}
 
 	public List<Movie> getMovies() {
@@ -56,6 +62,13 @@ public class Category {
 	
 	public void addMovies(Movie movie) {
 		movies.add(movie);
+	}
+
+	public int getMovieCount() {
+		
+		int movieCount = this.movies.size();
+		
+		return movieCount;
 	}
 	
 	

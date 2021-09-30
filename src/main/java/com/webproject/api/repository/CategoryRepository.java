@@ -9,6 +9,8 @@ import com.webproject.api.entity.Category;
 
 public interface CategoryRepository extends JpaRepository<Category, Long>  {
 
-	Category getCategoryByCategoryName(String categoryName);
+	Category getByCategoryName(String categoryName);
+	
+	
 	
 }

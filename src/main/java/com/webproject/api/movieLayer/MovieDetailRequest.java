@@ -19,6 +19,36 @@ public class MovieDetailRequest {
 	private String title;
 	
 	private String movieCategory;
+	
+	private String movieBanerUrl;
+
+	private String movieImageUrl;
+	
+	private String movieVideoUrl;
+
+	public String getMovieBanerUrl() {
+		return movieBanerUrl;
+	}
+
+	public void setMovieBanerUrl(String movieBanerUrl) {
+		this.movieBanerUrl = movieBanerUrl;
+	}
+
+	public String getMovieImageUrl() {
+		return movieImageUrl;
+	}
+
+	public void setMovieImageUrl(String movieImageUrl) {
+		this.movieImageUrl = movieImageUrl;
+	}
+
+	public String getMovieVideoUrl() {
+		return movieVideoUrl;
+	}
+
+	public void setMovieVideoUrl(String movieVideoUrl) {
+		this.movieVideoUrl = movieVideoUrl;
+	}
 
 	@JsonFormat(pattern = "dd/MM/yyyy")
 	private LocalDate releaseDate;
