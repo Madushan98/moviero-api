@@ -90,6 +90,51 @@ public List<MovieDetailsResponse> getLatestMovies(){
 }
 
 
+@GetMapping("/popular")
+public List<MovieDetailsResponse> getPopularMovies(){
+	
+	List<MovieDetailsResponse> returnMovies = new ArrayList<>();
+	
+	List<MovieDto> movies = movieService.getMostDownloadMovies();
+	
+	
+	
+	for (MovieDto movieDto : movies) {
+		MovieDetailsResponse movie = new MovieDetailsResponse() ;
+		BeanUtils.copyProperties(movieDto, movie);
+		returnMovies.add(movie);
+	}
+	
+	
+	
+	
+	return returnMovies;
+	
+}
+
+@GetMapping("/new")
+public List<MovieDetailsResponse> getNewMovies(){
+	
+	List<MovieDetailsResponse> returnMovies = new ArrayList<>();
+	
+	List<MovieDto> movies = movieService.getNewLyAddedMovies();
+	
+	
+	
+	for (MovieDto movieDto : movies) {
+		MovieDetailsResponse movie = new MovieDetailsResponse() ;
+		BeanUtils.copyProperties(movieDto, movie);
+		returnMovies.add(movie);
+	}
+	
+	
+	
+	
+	return returnMovies;
+	
+}
+
+
 
 @GetMapping("/search")	
 public Page<MovieDetailsResponse> Searchmovies(

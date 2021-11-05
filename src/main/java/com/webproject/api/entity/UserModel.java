@@ -171,7 +171,7 @@ public class UserModel  implements Serializable {
 
 	
 	
-	public Long getCardId() {
+	public Long getCartId() {
 		return cart.getId() ;
 	}
 	

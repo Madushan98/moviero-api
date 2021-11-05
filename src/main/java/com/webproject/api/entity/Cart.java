@@ -91,7 +91,7 @@ public class Cart {
 			String id = movie.getMovieId();
 
 			if (id.equals(movieId)) {
-
+				
 				return true;
 			}
 
@@ -110,9 +110,12 @@ public class Cart {
 			String id = movie.getMovieId();
 
 			if (!id.equals(movieId)) {
-
+				
 				newCart.add(movie);
 
+			}else {
+				
+				this.Total -= movie.getMoviePrice() ;
 			}
 
 		}

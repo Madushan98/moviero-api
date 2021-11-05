@@ -40,8 +40,7 @@ public class Category {
 	public Category(String categoryName,String categoryUrlPath,String categoryImageUrl) {
 		this.categoryName = categoryName ;
 		this.movies = Collections.emptyList();  
-//		this.categoryUrlpath = categoryUrlPath ;
-//		this.categoryImageUrl = categoryImageUrl ;
+
 	}
 
 	public List<Movie> getMovies() {

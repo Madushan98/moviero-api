@@ -27,7 +27,11 @@ public interface MovieService  {
 
 	List<MovieDto> getLatestMovies();
 
-	MovieDto updateMovie(MovieDto movieCopy, String id) throws Exception; 
+	MovieDto updateMovie(MovieDto movieCopy, String id) throws Exception;
+
+	List<MovieDto> getMostDownloadMovies();
+
+	List<MovieDto> getNewLyAddedMovies(); 
 	
 	
 }

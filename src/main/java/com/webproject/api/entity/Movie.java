@@ -31,12 +31,9 @@ public class Movie implements Serializable {
 	@Column(nullable = false)
 	private String movieId;
 
-
 	private String movieVideoUrl;
 
-	
 	private String movieBanerUrl;
-
 
 	private String movieImageUrl;
 
@@ -55,7 +52,7 @@ public class Movie implements Serializable {
 	@Column(nullable = false)
 	private double imdbRating;
 
-	@ManyToOne(fetch = FetchType.LAZY )
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "movie_category", nullable = true)
 	private Category category;
 
@@ -72,7 +69,8 @@ public class Movie implements Serializable {
 	}
 
 	public String getNameCategory() {
-		return category.getCategoryName();
+		
+		return category != null ? category.getCategoryName() : "No Info" ;
 	}
 
 	public void setCategory(Category category) {
@@ -180,25 +178,22 @@ public class Movie implements Serializable {
 	public void setDownloads(int downloads) {
 		this.downloads = downloads;
 	}
-	
-	
+
 	public void increaceDownloads() {
-		this.downloads += 1 ;
-		
+		this.downloads += 1;
+
 	}
 
 	public List<Cart> getCarts() {
 		return carts;
 	}
 
-
 	public List<StreamPurcheses> getPurcheses() {
 		return purcheses;
 	}
 
-
 	public void EmptyCarts() {
-		this.carts = null ;
+		this.carts = null;
 	}
-	
+
 }

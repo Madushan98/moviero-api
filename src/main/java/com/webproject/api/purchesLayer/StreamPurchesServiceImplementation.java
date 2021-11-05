@@ -10,6 +10,7 @@ import com.webproject.api.entity.Cart;
 import com.webproject.api.entity.Movie;
 import com.webproject.api.entity.StreamPurcheses;
 import com.webproject.api.entity.UserModel;
+import com.webproject.api.repository.CartRepository;
 import com.webproject.api.repository.CategoryRepository;
 import com.webproject.api.repository.MovieRepository;
 import com.webproject.api.repository.StreamPurchesRepository;
@@ -24,12 +25,12 @@ public class StreamPurchesServiceImplementation implements StreamPurchesService 
 
 
 	@Autowired
-	MovieRepository movieRepository ;
+	MovieRepository movieRepository;
 	
-	@Autowired
-	Utils utils;
+	
 
-	
+	@Autowired
+	CartRepository cartRepository;
 
 	
 	@Autowired
@@ -74,10 +75,23 @@ public class StreamPurchesServiceImplementation implements StreamPurchesService 
 		
 		
 		UserModel user = userRepository.findByUserId(userId);
+		
+		Cart userCart = cartRepository.getById(user.getCartId());
+		
+	
+		
+		
 		StreamPurcheses streamPurchesDetail = streamRepository.getById(user.getStreamId()) ;
+		
+		      
 		
 		for(String movieid : movies) {
 		 Movie	movie = movieRepository.getByMovieId(movieid);
+		 
+		 if(userCart.isMovieInCart(movieid)) {
+			 userCart.removefromCart(movieid);
+		 }
+		
 		 
 		 if(movie != null && !streamPurchesDetail.isMovieInPurchese(movieid)) {
 			 movie.increaceDownloads();
@@ -106,11 +120,7 @@ public class StreamPurchesServiceImplementation implements StreamPurchesService 
 		for(Movie mov : streamMovies) {
 			
 			StreamMovieResponse streamMovie = new StreamMovieResponse();
-			
 			BeanUtils.copyProperties(mov,streamMovie );
-			
-			
-			
 			streamMovie.setMovieVideoUrl(mov.getMovieVideoUrl());
 			streamMovie.setMovieCategory(mov.getNameCategory());
 			
