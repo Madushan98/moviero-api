@@ -17,14 +17,15 @@ import com.webproject.api.user.UserModel;
 @Entity
 @Table(name = "roles")
 public class Role {
-    @Id @GeneratedValue(strategy = GenerationType.AUTO)
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
     @Column(nullable = false, unique = true)
     private String name;
 
-    @ManyToMany(mappedBy = "roles",cascade = CascadeType.ALL)
-    @JsonIgnoreProperties(value = {"roles", "handler","hibernateLazyInitializer"}, allowSetters = true)
-    private List <UserModel> users;
+    @ManyToMany(mappedBy = "roles", cascade = CascadeType.ALL)
+    @JsonIgnoreProperties(value = {"roles", "handler", "hibernateLazyInitializer"}, allowSetters = true)
+    private List<UserModel> users;
 
     public Integer getId() {
         return id;
@@ -42,11 +43,11 @@ public class Role {
         this.name = name;
     }
 
-    public List < UserModel > getUsers() {
+    public List<UserModel> getUsers() {
         return users;
     }
 
-    public void setUsers(List < UserModel > users) {
+    public void setUsers(List<UserModel> users) {
         this.users = users;
     }
 }

@@ -8,15 +8,14 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 @SpringBootApplication
 public class ProjectMovieApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(ProjectMovieApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(ProjectMovieApplication.class, args);
+    }
 
-	@Bean
-	public BCryptPasswordEncoder bCrptPasswordEncoder() {
-		return new BCryptPasswordEncoder();
-	}
-
+    @Bean
+    public BCryptPasswordEncoder bCrptPasswordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 
 
 }
