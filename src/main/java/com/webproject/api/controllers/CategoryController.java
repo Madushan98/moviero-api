@@ -3,9 +3,8 @@ package com.webproject.api.controllers;
 
 import java.util.List;
 
-import org.springframework.beans.BeanUtils;
+import com.webproject.api.category.Category;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,12 +13,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.webproject.api.categoryLayer.CategoryDetailResponse;
-import com.webproject.api.categoryLayer.CategoryService;
-import com.webproject.api.entity.*;
-import com.webproject.api.repository.*;
-import com.webproject.api.userLayer.*;
-import com.webproject.api.movieLayer.*;
+import com.webproject.api.category.CategoryDetailResponse;
+import com.webproject.api.category.CategoryService;
+import com.webproject.api.movie.*;
 
 @RestController
 @RequestMapping("categories")

@@ -13,24 +13,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.webproject.api.repository.UserRepository;
-import com.webproject.api.analysisLayer.AnalysisDetailResponse;
-import com.webproject.api.analysisLayer.AnalysisService;
-import com.webproject.api.entity.UserModel;
-import com.webproject.api.movieLayer.MovieDetailRequest;
-import com.webproject.api.movieLayer.MovieDetailsResponse;
-import com.webproject.api.movieLayer.MovieDto;
-import com.webproject.api.movieLayer.MovieService;
-import com.webproject.api.repository.*;
-import com.webproject.api.userLayer.*;
+import com.webproject.api.analysis.AnalysisDetailResponse;
+import com.webproject.api.analysis.AnalysisService;
+import com.webproject.api.movie.MovieDetailRequest;
+import com.webproject.api.movie.MovieDetailsResponse;
+import com.webproject.api.movie.MovieDto;
+import com.webproject.api.movie.MovieService;
+import com.webproject.api.user.*;
 
 @RestController
 @RequestMapping("admin")
 public class AdminController {
 	@Autowired
 	UserService userService ;
-	
-//	@Autowired
-//	UserRepository userRepository ;
 	
 	@Autowired
 	UserRepository userRepository ;
@@ -40,16 +35,14 @@ public class AdminController {
 	
 	@Autowired
 	MovieService movieService ;
-	
 
 @GetMapping("/users")	
-public List<UserDetailResponse> GetUsers() {
+public List<UserDetailResponse> getUsers() {
 	
 	List<UserDetailResponse>  users = new ArrayList<>() ;
 	
 	List<UserDto> userResponse = userService.getAllUsers();
-	
-	
+
 	for (UserDto userDto : userResponse) {
 		UserDetailResponse user = new UserDetailResponse();
 		BeanUtils.copyProperties(userDto, user);
@@ -80,16 +73,9 @@ public MovieDetailsResponse  movieDetailUpdate(@PathVariable  String id, @Reques
 
 @GetMapping(path="/analytics")
 public AnalysisDetailResponse  getAnalysis() {
-	
-	AnalysisDetailResponse returnAnalysisData = analysisService.getData() ;
-	
-	
-	
-	return returnAnalysisData;
-	
-	
-}
 
-	
+	return analysisService.getData();
+
+}
 
 }

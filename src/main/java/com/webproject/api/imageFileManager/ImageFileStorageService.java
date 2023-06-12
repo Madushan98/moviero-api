@@ -5,7 +5,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.webproject.api.entity.ImageFileData;
 import com.webproject.api.exceptions.FileNotFoundException;
 import com.webproject.api.exceptions.FileStorageException;
 import com.webproject.api.repository.ImageFileRepository;

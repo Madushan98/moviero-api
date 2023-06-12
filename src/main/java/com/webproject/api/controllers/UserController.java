@@ -3,7 +3,6 @@ import java.util.List;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,16 +12,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.webproject.api.cartLayer.CartDetailResponse;
-import com.webproject.api.cartLayer.CartService;
-import com.webproject.api.entity.*;
-import com.webproject.api.exceptions.MovieServiceException;
-import com.webproject.api.purchesLayer.PurchesMoviesRequest;
-import com.webproject.api.purchesLayer.StreamPurchesDetailResponse;
-import com.webproject.api.purchesLayer.StreamPurchesService;
+import com.webproject.api.cart.CartDetailResponse;
+import com.webproject.api.cart.CartService;
+import com.webproject.api.purches.PurchesMoviesRequest;
+import com.webproject.api.purches.StreamPurchesDetailResponse;
+import com.webproject.api.purches.StreamPurchesService;
 
 import com.webproject.api.repository.*;
-import com.webproject.api.userLayer.*;
+import com.webproject.api.user.*;
 
 
 

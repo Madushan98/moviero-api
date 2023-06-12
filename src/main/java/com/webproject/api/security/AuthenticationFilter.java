@@ -22,11 +22,10 @@ import io.jsonwebtoken.SignatureAlgorithm;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.webproject.api.SpringApplicationContext;
-import com.webproject.api.userLayer.*;
+import com.webproject.api.user.*;
 
 public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 	 private final AuthenticationManager authenticationManager;
-	    
 	    private String contentType;
 	 
 	    public AuthenticationFilter(AuthenticationManager authenticationManager) {
@@ -75,8 +74,7 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 	        
 	        UserService userService = (UserService)SpringApplicationContext.getBean("userServiceImplementation");
 	        UserDto userDto = userService.getUser(userName);
-	        
-	        
+
 	        res.addHeader(SecurityConstants.HEADER_STRING, SecurityConstants.TOKEN_PREFIX + token);
 	        res.addHeader("UserID", userDto.getUserId()); 
 
