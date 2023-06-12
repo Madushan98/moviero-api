@@ -5,8 +5,6 @@ import org.springframework.stereotype.Repository;
 
 import com.webproject.api.purches.StreamPurcheses;
 
-
-
 @Repository
 public interface StreamPurchesRepository extends JpaRepository<StreamPurcheses, Long> {
 
