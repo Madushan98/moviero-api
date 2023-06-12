@@ -24,58 +24,58 @@ import com.webproject.api.user.*;
 @RestController
 @RequestMapping("admin")
 public class AdminController {
-	@Autowired
-	UserService userService ;
-	
-	@Autowired
-	UserRepository userRepository ;
-	
-	@Autowired
-	AnalysisService analysisService ;
-	
-	@Autowired
-	MovieService movieService ;
+    @Autowired
+    UserService userService;
 
-@GetMapping("/users")	
-public List<UserDetailResponse> getUsers() {
-	
-	List<UserDetailResponse>  users = new ArrayList<>() ;
-	
-	List<UserDto> userResponse = userService.getAllUsers();
+    @Autowired
+    UserRepository userRepository;
 
-	for (UserDto userDto : userResponse) {
-		UserDetailResponse user = new UserDetailResponse();
-		BeanUtils.copyProperties(userDto, user);
-		 users.add(user);
-	}
-	
-	return users ;
-}
+    @Autowired
+    AnalysisService analysisService;
+
+    @Autowired
+    MovieService movieService;
+
+    @GetMapping("/users")
+    public List<UserDetailResponse> getUsers() {
+
+        List<UserDetailResponse> users = new ArrayList<>();
+
+        List<UserDto> userResponse = userService.getAllUsers();
+
+        for (UserDto userDto : userResponse) {
+            UserDetailResponse user = new UserDetailResponse();
+            BeanUtils.copyProperties(userDto, user);
+            users.add(user);
+        }
+
+        return users;
+    }
 
 
-@PutMapping(path="/edit/{id}")
-public MovieDetailsResponse  movieDetailUpdate(@PathVariable  String id, @RequestBody MovieDetailRequest movieDetail) throws Exception {
-	
-	MovieDetailsResponse returnMovie = new MovieDetailsResponse();
-	
-	MovieDto movieCopy = new MovieDto() ;
-	
-	BeanUtils.copyProperties( movieDetail,movieCopy );
-	
-	MovieDto updateMovie = movieService.updateMovie(movieCopy,id); 
-	
-	BeanUtils.copyProperties( updateMovie,returnMovie );
-	
-	
-	return returnMovie;
-	
-}
+    @PutMapping(path = "/edit/{id}")
+    public MovieDetailsResponse movieDetailUpdate(@PathVariable String id, @RequestBody MovieDetailRequest movieDetail) throws Exception {
 
-@GetMapping(path="/analytics")
-public AnalysisDetailResponse  getAnalysis() {
+        MovieDetailsResponse returnMovie = new MovieDetailsResponse();
 
-	return analysisService.getData();
+        MovieDto movieCopy = new MovieDto();
 
-}
+        BeanUtils.copyProperties(movieDetail, movieCopy);
+
+        MovieDto updateMovie = movieService.updateMovie(movieCopy, id);
+
+        BeanUtils.copyProperties(updateMovie, returnMovie);
+
+
+        return returnMovie;
+
+    }
+
+    @GetMapping(path = "/analytics")
+    public AnalysisDetailResponse getAnalysis() {
+
+        return analysisService.getData();
+
+    }
 
 }

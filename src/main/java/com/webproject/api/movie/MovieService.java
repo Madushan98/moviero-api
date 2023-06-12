@@ -2,30 +2,27 @@ package com.webproject.api.movie;
 
 import java.util.List;
 
+public interface MovieService {
 
-public interface MovieService  {
+    MovieDto publishMovie(MovieDto movie) throws Exception;
 
-	MovieDto publishMovie(MovieDto movie) throws Exception ;
-	
-	MovieDto getMovieDetail(String movieId);
-	
-	 
+    MovieDto getMovieDetail(String movieId);
 
-	List<MovieDto> getMovies();
+    List<MovieDto> getMovies();
 
-	List<MovieDto> findByTitle(int page, int limit,String sortBy, String title); 
-	
-	List<MovieDto> findByCategory(String category);
+    List<MovieDto> findByTitle(int page, int limit, String sortBy, String title);
 
-	String deleteMovieDetail(String movieId) throws Exception;
+    List<MovieDto> findByCategory(String category);
 
-	List<MovieDto> getLatestMovies();
+    String deleteMovieDetail(String movieId) throws Exception;
 
-	MovieDto updateMovie(MovieDto movieCopy, String id) throws Exception;
+    List<MovieDto> getLatestMovies();
 
-	List<MovieDto> getMostDownloadMovies();
+    MovieDto updateMovie(MovieDto movieCopy, String id) throws Exception;
 
-	List<MovieDto> getNewLyAddedMovies(); 
-	
-	
+    List<MovieDto> getMostDownloadMovies();
+
+    List<MovieDto> getNewLyAddedMovies();
+
+
 }

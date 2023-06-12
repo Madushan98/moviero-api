@@ -3,120 +3,119 @@ package com.webproject.api.movie;
 import java.time.LocalDate;
 
 
-
 public class MovieDetailsResponse {
 
-	private long id;
+    private long id;
 
-	private String movieId;
+    private String movieId;
 
-	private String title;
+    private String title;
 
-	private String description;
+    private String description;
 
-	private Double moviePrice;
+    private Double moviePrice;
 
-	private LocalDate releaseDate;
+    private LocalDate releaseDate;
 
-	private LocalDate addToMoviesDate;
-	
-	private double imdbRating ;
-	
-	private String movieCategory ;
-	
-	private String movieBanerUrl;
+    private LocalDate addToMoviesDate;
 
-	private String movieImageUrl;
+    private double imdbRating;
 
-	private int downloads;
-	
+    private String movieCategory;
 
-	public int getDownloads() {
-		return downloads;
-	}
+    private String movieBanerUrl;
 
-	public void setDownloads(int downloads) {
-		this.downloads = downloads;
-	}
+    private String movieImageUrl;
 
-	public String getMovieCategory() {
-		return movieCategory;
-	}
+    private int downloads;
 
-	public void setMovieCategory(String movieCategory) {
-		this.movieCategory = movieCategory;
-	}
-	public LocalDate getReleaseDate() {
-		return releaseDate;
-	}
 
-	public void setReleaseDate(LocalDate releaseDate) {
-		this.releaseDate = releaseDate;
-	}
+    public int getDownloads() {
+        return downloads;
+    }
 
-	public LocalDate getAddToMoviesDate() {
-		return addToMoviesDate;
-	}
+    public void setDownloads(int downloads) {
+        this.downloads = downloads;
+    }
 
-	public void setAddToMoviesDate(LocalDate addToMoviesDate) {
-		this.addToMoviesDate = addToMoviesDate;
-	}
+    public String getMovieCategory() {
+        return movieCategory;
+    }
 
-	public String getMovieId() {
-		return movieId;
-	}
+    public void setMovieCategory(String movieCategory) {
+        this.movieCategory = movieCategory;
+    }
 
-	public void setMovieId(String movieId) {
-		this.movieId = movieId;
-	}
+    public LocalDate getReleaseDate() {
+        return releaseDate;
+    }
 
-	
+    public void setReleaseDate(LocalDate releaseDate) {
+        this.releaseDate = releaseDate;
+    }
 
-	public String getDescription() {
-		return description;
-	}
+    public LocalDate getAddToMoviesDate() {
+        return addToMoviesDate;
+    }
 
-	public void setDescription(String description) {
-		this.description = description;
-	}
+    public void setAddToMoviesDate(LocalDate addToMoviesDate) {
+        this.addToMoviesDate = addToMoviesDate;
+    }
 
-	public Double getMoviePrice() {
-		return moviePrice;
-	}
+    public String getMovieId() {
+        return movieId;
+    }
 
-	public void setMoviePrice(Double moviePrice) {
-		this.moviePrice = moviePrice;
-	}
+    public void setMovieId(String movieId) {
+        this.movieId = movieId;
+    }
 
-	public String getTitle() {
-		return title;
-	}
 
-	public void setTitle(String title) {
-		this.title = title;
-	}
+    public String getDescription() {
+        return description;
+    }
 
-	public double getImdbRating() {
-		return imdbRating;
-	}
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
-	public void setImdbRating(double imdbRating) {
-		this.imdbRating = imdbRating;
-	}
+    public Double getMoviePrice() {
+        return moviePrice;
+    }
 
-	public String getMovieBanerUrl() {
-		return movieBanerUrl;
-	}
+    public void setMoviePrice(Double moviePrice) {
+        this.moviePrice = moviePrice;
+    }
 
-	public void setMovieBanerUrl(String movieBanerUrl) {
-		this.movieBanerUrl = movieBanerUrl;
-	}
+    public String getTitle() {
+        return title;
+    }
 
-	public String getMovieImageUrl() {
-		return movieImageUrl;
-	}
+    public void setTitle(String title) {
+        this.title = title;
+    }
 
-	public void setMovieImageUrl(String movieImageUrl) {
-		this.movieImageUrl = movieImageUrl;
-	}
+    public double getImdbRating() {
+        return imdbRating;
+    }
+
+    public void setImdbRating(double imdbRating) {
+        this.imdbRating = imdbRating;
+    }
+
+    public String getMovieBanerUrl() {
+        return movieBanerUrl;
+    }
+
+    public void setMovieBanerUrl(String movieBanerUrl) {
+        this.movieBanerUrl = movieBanerUrl;
+    }
+
+    public String getMovieImageUrl() {
+        return movieImageUrl;
+    }
+
+    public void setMovieImageUrl(String movieImageUrl) {
+        this.movieImageUrl = movieImageUrl;
+    }
 }

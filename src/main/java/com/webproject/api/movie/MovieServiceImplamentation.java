@@ -17,25 +17,25 @@ import com.webproject.api.shared.Utils;
 
 @Service
 public class MovieServiceImplamentation implements MovieService {
-	@Autowired
-	StreamPurchesRepository streamRepository;
+    @Autowired
+    StreamPurchesRepository streamRepository;
 
-	@Autowired
-	MovieRepository movieRepository;
+    @Autowired
+    MovieRepository movieRepository;
 
-	@Autowired
-	Utils utils;
+    @Autowired
+    Utils utils;
 
-	@Autowired
-	CategoryRepository categoryRepository;
+    @Autowired
+    CategoryRepository categoryRepository;
 
-	@Autowired
-	CartRepository cartRepository;
+    @Autowired
+    CartRepository cartRepository;
 
-	@Override
-	public MovieDto publishMovie(MovieDto movie) throws Exception {
+    @Override
+    public MovieDto publishMovie(MovieDto movie) throws Exception {
 
-		Movie publishMovie = new Movie();
+        Movie publishMovie = new Movie();
 
 //		Movie movieAvailable = movieRepository.findByTitle(movie.getTitle());
 //		
@@ -44,220 +44,214 @@ public class MovieServiceImplamentation implements MovieService {
 //			throw new MovieServiceException("Movie is Already Available");
 //		}
 
-		BeanUtils.copyProperties(movie, publishMovie);
-		
-		
+        BeanUtils.copyProperties(movie, publishMovie);
 
-		String movieId = utils.generateUserId(25);
 
-		publishMovie.setMovieId(movieId);
+        String movieId = utils.generateUserId(25);
 
-		Category getCategory = categoryRepository.getByCategoryName(movie.getMovieCategory());
+        publishMovie.setMovieId(movieId);
 
-		publishMovie.setCategory(getCategory);
+        Category getCategory = categoryRepository.getByCategoryName(movie.getMovieCategory());
 
-		publishMovie.setDownloads(0);
+        publishMovie.setCategory(getCategory);
 
-		Movie storedMovie = movieRepository.save(publishMovie);
+        publishMovie.setDownloads(0);
 
-		MovieDto returnMovie = new MovieDto();
-		BeanUtils.copyProperties(storedMovie, returnMovie);
+        Movie storedMovie = movieRepository.save(publishMovie);
 
-		returnMovie.setMovieCategory(storedMovie.getNameCategory());
+        MovieDto returnMovie = new MovieDto();
+        BeanUtils.copyProperties(storedMovie, returnMovie);
 
-		return returnMovie;
-	}
+        returnMovie.setMovieCategory(storedMovie.getNameCategory());
 
-	@Override
-	public MovieDto getMovieDetail(String movieId) {
+        return returnMovie;
+    }
 
-		MovieDto returnMovie = new MovieDto();
+    @Override
+    public MovieDto getMovieDetail(String movieId) {
 
-		Movie movie = movieRepository.getByMovieId(movieId);
+        MovieDto returnMovie = new MovieDto();
 
-		BeanUtils.copyProperties(movie, returnMovie);
+        Movie movie = movieRepository.getByMovieId(movieId);
 
-		returnMovie.setMovieCategory(movie.getNameCategory());
+        BeanUtils.copyProperties(movie, returnMovie);
 
-		return returnMovie;
-	}
+        returnMovie.setMovieCategory(movie.getNameCategory());
 
-	@Override
-	public List<MovieDto> getMovies() {
+        return returnMovie;
+    }
 
-		List<MovieDto> returnMovies = new ArrayList<MovieDto>();
+    @Override
+    public List<MovieDto> getMovies() {
 
-		List<Movie> movies = movieRepository.findAll();
+        List<MovieDto> returnMovies = new ArrayList<MovieDto>();
 
-		for (Movie movieEntity : movies) {
-			MovieDto movie = new MovieDto();
-			
-	
-			BeanUtils.copyProperties(movieEntity, movie);
-			String category = movieEntity.getNameCategory() ;
-			
-			movie.setMovieCategory(category);
-			
-			
+        List<Movie> movies = movieRepository.findAll();
 
-			returnMovies.add(movie);
-		}
+        for (Movie movieEntity : movies) {
+            MovieDto movie = new MovieDto();
 
-		
-		
-		return returnMovies;
-	}
 
-	@Override
-	public List<MovieDto> findByTitle(int page, int limit, String sortBy, String title) {
+            BeanUtils.copyProperties(movieEntity, movie);
+            String category = movieEntity.getNameCategory();
 
-		List<Movie> movieResult = movieRepository.findByTitle(title);
+            movie.setMovieCategory(category);
 
-		List<MovieDto> returnMovies = new ArrayList<MovieDto>();
 
-		for (Movie movieEntity : movieResult) {
-			MovieDto movie = new MovieDto();
-			BeanUtils.copyProperties(movieEntity, movie);
-			movie.setMovieCategory(movieEntity.getNameCategory());
+            returnMovies.add(movie);
+        }
 
-			returnMovies.add(movie);
-		}
 
-		return returnMovies;
-	}
+        return returnMovies;
+    }
 
-	@Override
-	public List<MovieDto> findByCategory(String category) {
-		// TODO Auto-generated method stub
+    @Override
+    public List<MovieDto> findByTitle(int page, int limit, String sortBy, String title) {
 
-		Category categoryResult = categoryRepository.getByCategoryName(category);
+        List<Movie> movieResult = movieRepository.findByTitle(title);
 
-		List<Movie> movieResult = movieRepository.findByCategory(categoryResult);
+        List<MovieDto> returnMovies = new ArrayList<MovieDto>();
 
-		List<MovieDto> returnMovies = new ArrayList<MovieDto>();
+        for (Movie movieEntity : movieResult) {
+            MovieDto movie = new MovieDto();
+            BeanUtils.copyProperties(movieEntity, movie);
+            movie.setMovieCategory(movieEntity.getNameCategory());
 
-		for (Movie movieEntity : movieResult) {
-			MovieDto movie = new MovieDto();
-			BeanUtils.copyProperties(movieEntity, movie);
-			movie.setMovieCategory(movieEntity.getNameCategory());
+            returnMovies.add(movie);
+        }
 
-			returnMovies.add(movie);
-		}
+        return returnMovies;
+    }
 
-		return returnMovies;
-	}
+    @Override
+    public List<MovieDto> findByCategory(String category) {
+        // TODO Auto-generated method stub
 
-	@Override
-	public String deleteMovieDetail(String movieId) throws Exception {
+        Category categoryResult = categoryRepository.getByCategoryName(category);
 
-		Movie movie = movieRepository.findByMovieId(movieId);
+        List<Movie> movieResult = movieRepository.findByCategory(categoryResult);
 
-		if (movie == null) {
-			throw new MovieServiceException("Movie is Not Valid");
-		}
+        List<MovieDto> returnMovies = new ArrayList<MovieDto>();
 
-		for (Cart cart : movie.getCarts()) {
-			cart.removefromCart(movieId);
-			cart.removeFromTotal(movie.getMoviePrice());
-			cartRepository.save(cart);
-		}
+        for (Movie movieEntity : movieResult) {
+            MovieDto movie = new MovieDto();
+            BeanUtils.copyProperties(movieEntity, movie);
+            movie.setMovieCategory(movieEntity.getNameCategory());
 
-		for (StreamPurcheses purchese : movie.getPurcheses()) {
-			purchese.removefromPurchese(movieId);
+            returnMovies.add(movie);
+        }
 
-			streamRepository.save(purchese);
-		}
+        return returnMovies;
+    }
 
-		movieRepository.deleteById(movie.getId());
+    @Override
+    public String deleteMovieDetail(String movieId) throws Exception {
 
-		return "Movie Succesfully Deleted";
-	}
+        Movie movie = movieRepository.findByMovieId(movieId);
 
-	@Override
-	public List<MovieDto> getLatestMovies() {
+        if (movie == null) {
+            throw new MovieServiceException("Movie is Not Valid");
+        }
 
-		List<Movie> movies = movieRepository.findAll(Sort.by("releaseDate").descending());
+        for (Cart cart : movie.getCarts()) {
+            cart.removefromCart(movieId);
+            cart.removeFromTotal(movie.getMoviePrice());
+            cartRepository.save(cart);
+        }
 
-		List<MovieDto> returnMovies = new ArrayList<MovieDto>();
-		for (Movie movieEntity : movies) {
-			MovieDto movie = new MovieDto();
-			BeanUtils.copyProperties(movieEntity, movie);
-			movie.setMovieCategory(movieEntity.getNameCategory());
+        for (StreamPurcheses purchese : movie.getPurcheses()) {
+            purchese.removefromPurchese(movieId);
 
-			returnMovies.add(movie);
-		}
+            streamRepository.save(purchese);
+        }
 
-		return returnMovies;
-	}
+        movieRepository.deleteById(movie.getId());
 
-	@Override
-	public List<MovieDto> getNewLyAddedMovies() {
+        return "Movie Succesfully Deleted";
+    }
 
-		List<Movie> movies = movieRepository.findAll(Sort.by("addToMoviesDate").descending());
+    @Override
+    public List<MovieDto> getLatestMovies() {
 
-		List<MovieDto> returnMovies = new ArrayList<MovieDto>();
-		for (Movie movieEntity : movies) {
-			MovieDto movie = new MovieDto();
-			BeanUtils.copyProperties(movieEntity, movie);
-			movie.setMovieCategory(movieEntity.getNameCategory());
+        List<Movie> movies = movieRepository.findAll(Sort.by("releaseDate").descending());
 
-			returnMovies.add(movie);
-		}
+        List<MovieDto> returnMovies = new ArrayList<MovieDto>();
+        for (Movie movieEntity : movies) {
+            MovieDto movie = new MovieDto();
+            BeanUtils.copyProperties(movieEntity, movie);
+            movie.setMovieCategory(movieEntity.getNameCategory());
 
-		return returnMovies;
-	}
+            returnMovies.add(movie);
+        }
 
-	
+        return returnMovies;
+    }
 
-	@Override
-	public List<MovieDto> getMostDownloadMovies() {
+    @Override
+    public List<MovieDto> getNewLyAddedMovies() {
 
-		List<Movie> movies = movieRepository.findAll(Sort.by("downloads").descending());
+        List<Movie> movies = movieRepository.findAll(Sort.by("addToMoviesDate").descending());
 
-		List<MovieDto> returnMovies = new ArrayList<MovieDto>();
-		for (Movie movieEntity : movies) {
-			MovieDto movie = new MovieDto();
-			BeanUtils.copyProperties(movieEntity, movie);
-			movie.setMovieCategory(movieEntity.getNameCategory());
+        List<MovieDto> returnMovies = new ArrayList<MovieDto>();
+        for (Movie movieEntity : movies) {
+            MovieDto movie = new MovieDto();
+            BeanUtils.copyProperties(movieEntity, movie);
+            movie.setMovieCategory(movieEntity.getNameCategory());
 
-			returnMovies.add(movie);
-		}
+            returnMovies.add(movie);
+        }
 
-		return returnMovies;
-	}
-	
-	
-	@Override
-	public MovieDto updateMovie(MovieDto movieCopy, String id) throws Exception {
+        return returnMovies;
+    }
 
-		MovieDto updatedMovie = new MovieDto();
 
-		Movie movieModel = movieRepository.findByMovieId(id);
+    @Override
+    public List<MovieDto> getMostDownloadMovies() {
 
-		if (movieModel == null) {
-			throw new MovieServiceException("Movie is Not Valid");
-		}
+        List<Movie> movies = movieRepository.findAll(Sort.by("downloads").descending());
 
-		Category category = categoryRepository.getByCategoryName(movieCopy.getMovieCategory());
+        List<MovieDto> returnMovies = new ArrayList<MovieDto>();
+        for (Movie movieEntity : movies) {
+            MovieDto movie = new MovieDto();
+            BeanUtils.copyProperties(movieEntity, movie);
+            movie.setMovieCategory(movieEntity.getNameCategory());
 
-		movieModel.setTitle(movieCopy.getTitle());
-		movieModel.setDescription(movieCopy.getDescription());
-		movieModel.setImdbRating(movieCopy.getImdbRating());
-		movieModel.setMoviePrice(movieCopy.getMoviePrice());
-		movieModel.setCategory(category);
+            returnMovies.add(movie);
+        }
 
-		Movie updatedDetails = movieRepository.save(movieModel);
+        return returnMovies;
+    }
 
-		MovieDto returnMovie = new MovieDto();
 
-		BeanUtils.copyProperties(updatedDetails, returnMovie);
+    @Override
+    public MovieDto updateMovie(MovieDto movieCopy, String id) throws Exception {
 
-		returnMovie.setMovieCategory(updatedDetails.getNameCategory());
+        MovieDto updatedMovie = new MovieDto();
 
-		return returnMovie;
-	}
-	
-	
-	
+        Movie movieModel = movieRepository.findByMovieId(id);
+
+        if (movieModel == null) {
+            throw new MovieServiceException("Movie is Not Valid");
+        }
+
+        Category category = categoryRepository.getByCategoryName(movieCopy.getMovieCategory());
+
+        movieModel.setTitle(movieCopy.getTitle());
+        movieModel.setDescription(movieCopy.getDescription());
+        movieModel.setImdbRating(movieCopy.getImdbRating());
+        movieModel.setMoviePrice(movieCopy.getMoviePrice());
+        movieModel.setCategory(category);
+
+        Movie updatedDetails = movieRepository.save(movieModel);
+
+        MovieDto returnMovie = new MovieDto();
+
+        BeanUtils.copyProperties(updatedDetails, returnMovie);
+
+        returnMovie.setMovieCategory(updatedDetails.getNameCategory());
+
+        return returnMovie;
+    }
+
 
 }

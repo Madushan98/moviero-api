@@ -26,13 +26,9 @@ public class Category {
 	@Column(nullable = false)
 	private String categoryName ;
 
-
-	
-
 	@OneToMany(mappedBy = "category", cascade = CascadeType.DETACH, orphanRemoval = true)
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private List<Movie> movies;
-	
 	
 	public Category() {
 		this.movies = new ArrayList<>();
@@ -40,8 +36,7 @@ public class Category {
 	
 	public Category(String categoryName,String categoryUrlPath,String categoryImageUrl) {
 		this.categoryName = categoryName ;
-		this.movies = Collections.emptyList();  
-
+		this.movies = Collections.emptyList();
 	}
 
 	public List<Movie> getMovies() {
@@ -70,8 +65,6 @@ public class Category {
 		
 		return movieCount;
 	}
-	
-	
-	
+
 }
 

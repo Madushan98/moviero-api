@@ -8,14 +8,14 @@ import javax.persistence.*;
 @Table(name = "files")
 public class ImageFileData {
     public String getId() {
-		return id;
-	}
+        return id;
+    }
 
-	public void setId(String id) {
-		this.id = id;
-	}
+    public void setId(String id) {
+        this.id = id;
+    }
 
-	@Id
+    @Id
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid2")
     private String id;
@@ -28,30 +28,30 @@ public class ImageFileData {
     private byte[] data;
 
     public String getFileName() {
-		return fileName;
-	}
+        return fileName;
+    }
 
-	public void setFileName(String fileName) {
-		this.fileName = fileName;
-	}
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
+    }
 
-	public String getFileType() {
-		return fileType;
-	}
+    public String getFileType() {
+        return fileType;
+    }
 
-	public void setFileType(String fileType) {
-		this.fileType = fileType;
-	}
+    public void setFileType(String fileType) {
+        this.fileType = fileType;
+    }
 
-	public byte[] getData() {
-		return data;
-	}
+    public byte[] getData() {
+        return data;
+    }
 
-	public void setData(byte[] data) {
-		this.data = data;
-	}
+    public void setData(byte[] data) {
+        this.data = data;
+    }
 
-	public ImageFileData() {
+    public ImageFileData() {
 
     }
 

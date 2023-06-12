@@ -14,7 +14,6 @@ import com.webproject.api.repository.UserRepository;
 
 @Service
 public class AnalysisServiceImplementation implements AnalysisService {
-
 	@Autowired
 	UserRepository userRepository ;
 	
@@ -36,8 +35,7 @@ public class AnalysisServiceImplementation implements AnalysisService {
 		int totalDownloads = 0;
 		
 		double totalRevenue = 0 ;
-		
-		
+
 		for (Movie movie : allMovies) {
 		
 			totalDownloads += movie.getDownloads() ;
@@ -45,26 +43,11 @@ public class AnalysisServiceImplementation implements AnalysisService {
 			totalRevenue += (movie.getDownloads()*movie.getMoviePrice()) ;
 			
 		}
-		
-		
-		
 		AnalysisDetailResponse analyst = new AnalysisDetailResponse() ;
-		
 		analyst.setTotalDownloads(totalDownloads);
 		analyst.setTotalMovies(totalMovies);
 		analyst.setTotalUsers(totalUsers);
 		analyst.setTotalRevenue(totalRevenue);
-			
-			
-			
-			
-			
-	
-		
 		return analyst;
 	}
-
-	
-	
-	
 }

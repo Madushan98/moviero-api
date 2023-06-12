@@ -18,18 +18,16 @@ public class ImageFileStorageService {
     private ImageFileRepository imageFileRepository;
 
     public ImageFileData storeFile(MultipartFile file) {
-      
+
         String fileName = StringUtils.cleanPath(file.getOriginalFilename());
-       
-        
-        
-        String filetype = file.getContentType() ;
-        
-      
-        
+
+
+        String filetype = file.getContentType();
+
+
         try {
-          
-            if(fileName.contains("..")) {
+
+            if (fileName.contains("..")) {
                 throw new FileStorageException("Sorry! Filename contains invalid path sequence " + fileName);
             }
 

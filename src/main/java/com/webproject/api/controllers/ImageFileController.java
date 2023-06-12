@@ -47,7 +47,7 @@ public class ImageFileController {
         return new UploadResponse(dbFile.getFileName(), fileDownloadUri,
                 file.getContentType(), file.getSize());
     }
-    
+
     @PostMapping("/uploadMultipleImageFiles")
     public List<UploadResponse> uploadMultipleFiles(@RequestParam("files") MultipartFile[] files) {
         return Arrays.asList(files)
@@ -66,9 +66,6 @@ public class ImageFileController {
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + dbFile.getFileName() + "\"")
                 .body(new ByteArrayResource(dbFile.getData()));
     }
-    
-    
-
 
 
 }

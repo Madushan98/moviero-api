@@ -2,15 +2,11 @@ package com.webproject.api.category;
 
 public class CategoryDetailResponse {
 
-	
 	private String categoryName ;
 	
 	private int movieCount ;
 	
 	private int totalDownloads ;
-	
-	
-	
 
 	public String getCategoryName() {
 		return categoryName;
@@ -35,9 +31,5 @@ public class CategoryDetailResponse {
 	public void setTotalDownloads(int totalDownloads) {
 		this.totalDownloads = totalDownloads;
 	}
-	
-	
-	
-	
-	
+
 }

@@ -41,9 +41,5 @@ public class AnalysisDetailResponse {
 	public void setTotalDownloads(int totalDownloads) {
 		this.totalDownloads = totalDownloads;
 	}
-	
-	
-	
-	
-	
+
 }

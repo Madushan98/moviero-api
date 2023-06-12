@@ -20,53 +20,42 @@ import com.webproject.api.movie.*;
 @RestController
 @RequestMapping("categories")
 public class CategoryController {
-	
-	@Autowired
-	CategoryService categoryService ;
-	
-	@Autowired
-	MovieService movieService ;
-	
 
-	@PostMapping
-	public CategoryDetailResponse createCategory(@RequestBody Category category) {
-		
-		
-		
-		CategoryDetailResponse returnCategory = categoryService.save(category);
-		
-		
-		
-		
-		return returnCategory ;
-	}
-	
-	@DeleteMapping(path="/{name}")
-	public String deleteCategory(@PathVariable String name){
-		
-		
-		
-		CategoryDetailResponse deleteCategory = categoryService.deleteByCategoryName(name) ;
-		
-		
-		
-		return "User Deleted SuccesFully";
-		
-	}
-	
-	
-	@GetMapping
-	public List<CategoryDetailResponse> getAllCategories() {
-	
-		List<CategoryDetailResponse> allCategories = categoryService.findAll();
-		
-		
-		
+    @Autowired
+    CategoryService categoryService;
 
-		return allCategories ;
-	}
-	
+    @Autowired
+    MovieService movieService;
 
-	
-	
+
+    @PostMapping
+    public CategoryDetailResponse createCategory(@RequestBody Category category) {
+
+        CategoryDetailResponse returnCategory = categoryService.save(category);
+
+        return returnCategory;
+    }
+
+    @DeleteMapping(path = "/{name}")
+    public String deleteCategory(@PathVariable String name) {
+
+
+        CategoryDetailResponse deleteCategory = categoryService.deleteByCategoryName(name);
+
+
+        return "User Deleted SuccesFully";
+
+    }
+
+
+    @GetMapping
+    public List<CategoryDetailResponse> getAllCategories() {
+
+        List<CategoryDetailResponse> allCategories = categoryService.findAll();
+
+
+        return allCategories;
+    }
+
+
 }

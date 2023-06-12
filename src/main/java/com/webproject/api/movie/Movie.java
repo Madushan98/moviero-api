@@ -21,178 +21,178 @@ import com.webproject.api.purches.StreamPurcheses;
 @Entity
 public class Movie implements Serializable {
 
-	private static final long serialVersionUID = -4652777307512175027L;
+    private static final long serialVersionUID = -4652777307512175027L;
 
-	@Id
-	@GeneratedValue
-	private long id;
+    @Id
+    @GeneratedValue
+    private long id;
 
-	@Column(nullable = false)
-	private String movieId;
+    @Column(nullable = false)
+    private String movieId;
 
-	private String movieVideoUrl;
+    private String movieVideoUrl;
 
-	private String movieBanerUrl;
+    private String movieBanerUrl;
 
-	private String movieImageUrl;
+    private String movieImageUrl;
 
-	@Column(nullable = false, length = 50)
-	private String title;
+    @Column(nullable = false, length = 50)
+    private String title;
 
-	@Column(columnDefinition = "TEXT", nullable = false, length = 4000)
-	private String description;
+    @Column(columnDefinition = "TEXT", nullable = false, length = 4000)
+    private String description;
 
-	@Column(nullable = false)
-	private Double moviePrice;
+    @Column(nullable = false)
+    private Double moviePrice;
 
-	@Column(nullable = false)
-	private int downloads;
+    @Column(nullable = false)
+    private int downloads;
 
-	@Column(nullable = false)
-	private double imdbRating;
+    @Column(nullable = false)
+    private double imdbRating;
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "movie_category", nullable = true)
-	private Category category;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "movie_category", nullable = true)
+    private Category category;
 
-	@ManyToMany(mappedBy = "inCart", fetch = FetchType.LAZY)
-	@JsonIgnoreProperties("inCart")
-	private List<Cart> carts;
+    @ManyToMany(mappedBy = "inCart", fetch = FetchType.LAZY)
+    @JsonIgnoreProperties("inCart")
+    private List<Cart> carts;
 
-	@ManyToMany(mappedBy = "moviesPurchesed", fetch = FetchType.LAZY)
-	@JsonIgnoreProperties("moviesPurchesed")
-	private List<StreamPurcheses> purcheses;
+    @ManyToMany(mappedBy = "moviesPurchesed", fetch = FetchType.LAZY)
+    @JsonIgnoreProperties("moviesPurchesed")
+    private List<StreamPurcheses> purcheses;
 
-	public Category getCategory() {
-		return category;
-	}
+    public Category getCategory() {
+        return category;
+    }
 
-	public String getNameCategory() {
-		
-		return category != null ? category.getCategoryName() : "No Info" ;
-	}
+    public String getNameCategory() {
 
-	public void setCategory(Category category) {
-		this.category = category;
-	}
+        return category != null ? category.getCategoryName() : "No Info";
+    }
 
-	// @Column(nullable = false)
-	private LocalDate releaseDate;
+    public void setCategory(Category category) {
+        this.category = category;
+    }
 
-	// @Column(nullable = false)
-	private LocalDate addToMoviesDate;
+    // @Column(nullable = false)
+    private LocalDate releaseDate;
 
-	public LocalDate getAddToMoviesDate() {
-		return addToMoviesDate;
-	}
+    // @Column(nullable = false)
+    private LocalDate addToMoviesDate;
 
-	public void setAddToMoviesDate(LocalDate addToMoviesDate) {
-		this.addToMoviesDate = addToMoviesDate;
-	}
+    public LocalDate getAddToMoviesDate() {
+        return addToMoviesDate;
+    }
 
-	public LocalDate getReleaseDate() {
-		return releaseDate;
-	}
+    public void setAddToMoviesDate(LocalDate addToMoviesDate) {
+        this.addToMoviesDate = addToMoviesDate;
+    }
 
-	public void setReleaseDate(LocalDate releaseDate) {
-		this.releaseDate = releaseDate;
-	}
+    public LocalDate getReleaseDate() {
+        return releaseDate;
+    }
 
-	public String getMovieId() {
-		return movieId;
-	}
+    public void setReleaseDate(LocalDate releaseDate) {
+        this.releaseDate = releaseDate;
+    }
 
-	public void setMovieId(String movieId) {
-		this.movieId = movieId;
-	}
+    public String getMovieId() {
+        return movieId;
+    }
 
-	public long getId() {
-		return id;
-	}
+    public void setMovieId(String movieId) {
+        this.movieId = movieId;
+    }
 
-	public void setId(long id) {
-		this.id = id;
-	}
+    public long getId() {
+        return id;
+    }
 
-	public String getTitle() {
-		return title;
-	}
+    public void setId(long id) {
+        this.id = id;
+    }
 
-	public void setTitle(String title) {
-		this.title = title;
-	}
+    public String getTitle() {
+        return title;
+    }
 
-	public String getDescription() {
-		return description;
-	}
+    public void setTitle(String title) {
+        this.title = title;
+    }
 
-	public void setDescription(String description) {
-		this.description = description;
-	}
+    public String getDescription() {
+        return description;
+    }
 
-	public Double getMoviePrice() {
-		return moviePrice;
-	}
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
-	public void setMoviePrice(Double moviePrice) {
-		this.moviePrice = moviePrice;
-	}
+    public Double getMoviePrice() {
+        return moviePrice;
+    }
 
-	public double getImdbRating() {
-		return imdbRating;
-	}
+    public void setMoviePrice(Double moviePrice) {
+        this.moviePrice = moviePrice;
+    }
 
-	public void setImdbRating(double imdbRating) {
-		this.imdbRating = imdbRating;
-	}
+    public double getImdbRating() {
+        return imdbRating;
+    }
 
-	public String getMovieVideoUrl() {
-		return movieVideoUrl;
-	}
+    public void setImdbRating(double imdbRating) {
+        this.imdbRating = imdbRating;
+    }
 
-	public void setMovieVideoUrl(String movieVideoUrl) {
-		this.movieVideoUrl = movieVideoUrl;
-	}
+    public String getMovieVideoUrl() {
+        return movieVideoUrl;
+    }
 
-	public String getMovieBanerUrl() {
-		return movieBanerUrl;
-	}
+    public void setMovieVideoUrl(String movieVideoUrl) {
+        this.movieVideoUrl = movieVideoUrl;
+    }
 
-	public void setMovieBanerUrl(String movieBanerUrl) {
-		this.movieBanerUrl = movieBanerUrl;
-	}
+    public String getMovieBanerUrl() {
+        return movieBanerUrl;
+    }
 
-	public String getMovieImageUrl() {
-		return movieImageUrl;
-	}
+    public void setMovieBanerUrl(String movieBanerUrl) {
+        this.movieBanerUrl = movieBanerUrl;
+    }
 
-	public void setMovieImageUrl(String movieImageUrl) {
-		this.movieImageUrl = movieImageUrl;
-	}
+    public String getMovieImageUrl() {
+        return movieImageUrl;
+    }
 
-	public int getDownloads() {
-		return downloads;
-	}
+    public void setMovieImageUrl(String movieImageUrl) {
+        this.movieImageUrl = movieImageUrl;
+    }
 
-	public void setDownloads(int downloads) {
-		this.downloads = downloads;
-	}
+    public int getDownloads() {
+        return downloads;
+    }
 
-	public void increaceDownloads() {
-		this.downloads += 1;
+    public void setDownloads(int downloads) {
+        this.downloads = downloads;
+    }
 
-	}
+    public void increaceDownloads() {
+        this.downloads += 1;
 
-	public List<Cart> getCarts() {
-		return carts;
-	}
+    }
 
-	public List<StreamPurcheses> getPurcheses() {
-		return purcheses;
-	}
+    public List<Cart> getCarts() {
+        return carts;
+    }
 
-	public void EmptyCarts() {
-		this.carts = null;
-	}
+    public List<StreamPurcheses> getPurcheses() {
+        return purcheses;
+    }
+
+    public void EmptyCarts() {
+        this.carts = null;
+    }
 
 }

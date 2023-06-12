@@ -5,112 +5,110 @@ import java.time.LocalDate;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 
-
 public class MovieDetailRequest {
 
-	private String description;
+    private String description;
 
-	private double imdbRating ;
+    private double imdbRating;
 
-	private Double moviePrice;
+    private Double moviePrice;
 
-	private String movieUrl;
+    private String movieUrl;
 
-	private String title;
-	
-	private String movieCategory;
-	
-	private String movieBanerUrl;
+    private String title;
 
-	private String movieImageUrl;
-	
-	private String movieVideoUrl;
+    private String movieCategory;
 
-	public String getMovieBanerUrl() {
-		return movieBanerUrl;
-	}
+    private String movieBanerUrl;
 
-	public void setMovieBanerUrl(String movieBanerUrl) {
-		this.movieBanerUrl = movieBanerUrl;
-	}
+    private String movieImageUrl;
 
-	public String getMovieImageUrl() {
-		return movieImageUrl;
-	}
+    private String movieVideoUrl;
 
-	public void setMovieImageUrl(String movieImageUrl) {
-		this.movieImageUrl = movieImageUrl;
-	}
+    public String getMovieBanerUrl() {
+        return movieBanerUrl;
+    }
 
-	public String getMovieVideoUrl() {
-		return movieVideoUrl;
-	}
+    public void setMovieBanerUrl(String movieBanerUrl) {
+        this.movieBanerUrl = movieBanerUrl;
+    }
 
-	public void setMovieVideoUrl(String movieVideoUrl) {
-		this.movieVideoUrl = movieVideoUrl;
-	}
+    public String getMovieImageUrl() {
+        return movieImageUrl;
+    }
 
-	@JsonFormat(pattern = "dd/MM/yyyy")
-	private LocalDate releaseDate;
+    public void setMovieImageUrl(String movieImageUrl) {
+        this.movieImageUrl = movieImageUrl;
+    }
 
-	
-	public String getMovieCategory() {
-		return movieCategory;
-	}
+    public String getMovieVideoUrl() {
+        return movieVideoUrl;
+    }
 
-	public void setMovieCategory(String movieCategory) {
-		this.movieCategory = movieCategory;
-	}
-	
-	
-	public LocalDate getReleaseDate() {
-		return releaseDate;
-	}
+    public void setMovieVideoUrl(String movieVideoUrl) {
+        this.movieVideoUrl = movieVideoUrl;
+    }
 
-	public void setReleaseDate(LocalDate releaseDate) {
-		this.releaseDate = releaseDate;
-	}
+    @JsonFormat(pattern = "dd/MM/yyyy")
+    private LocalDate releaseDate;
 
-	public String getMovieUrl() {
-		return movieUrl;
-	}
 
-	public void setMovieUrl(String movieUrl) {
-		this.movieUrl = movieUrl;
-	}
+    public String getMovieCategory() {
+        return movieCategory;
+    }
 
-	
+    public void setMovieCategory(String movieCategory) {
+        this.movieCategory = movieCategory;
+    }
 
-	public String getTitle() {
-		return title;
-	}
 
-	public void setTitle(String title) {
-		this.title = title;
-	}
+    public LocalDate getReleaseDate() {
+        return releaseDate;
+    }
 
-	public String getDescription() {
-		return description;
-	}
+    public void setReleaseDate(LocalDate releaseDate) {
+        this.releaseDate = releaseDate;
+    }
 
-	public void setDescription(String description) {
-		this.description = description;
-	}
+    public String getMovieUrl() {
+        return movieUrl;
+    }
 
-	public Double getMoviePrice() {
-		return moviePrice;
-	}
+    public void setMovieUrl(String movieUrl) {
+        this.movieUrl = movieUrl;
+    }
 
-	public void setMoviePrice(Double moviePrice) {
-		this.moviePrice = moviePrice;
-	}
 
-	public double getImdbRating() {
-		return imdbRating;
-	}
+    public String getTitle() {
+        return title;
+    }
 
-	public void setImdbRating(double imdbRating) {
-		this.imdbRating = imdbRating;
-	}
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public Double getMoviePrice() {
+        return moviePrice;
+    }
+
+    public void setMoviePrice(Double moviePrice) {
+        this.moviePrice = moviePrice;
+    }
+
+    public double getImdbRating() {
+        return imdbRating;
+    }
+
+    public void setImdbRating(double imdbRating) {
+        this.imdbRating = imdbRating;
+    }
 
 }
