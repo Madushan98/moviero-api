@@ -1,6 +1,7 @@
 package com.webproject.api.controllers;
 
 import java.util.stream.Collectors;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,15 +13,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-import com.webproject.api.entity.ImageFileData;
-import com.webproject.api.entity.VideoFileData;
+import com.webproject.api.imageFileManager.ImageFileData;
 import com.webproject.api.imageFileManager.ImageFileStorageService;
 import com.webproject.api.imageFileManager.UploadResponse;
 
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 
 @RestController

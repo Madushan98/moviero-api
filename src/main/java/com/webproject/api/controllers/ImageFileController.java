@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.webproject.api.entity.ImageFileData;
+import com.webproject.api.imageFileManager.ImageFileData;
 import com.webproject.api.imageFileManager.ImageFileStorageService;
 import com.webproject.api.imageFileManager.UploadResponse;
 
@@ -48,20 +48,6 @@ public class ImageFileController {
                 file.getContentType(), file.getSize());
     }
 
-    
-//    @PostMapping("/bannerUpload")
-//    public UploadResponse uploadBannerFile(@RequestParam("file") MultipartFile file) {
-//        ImageFileData dbFile = dbFileStorageService.storeFile(file);
-//
-//        String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
-//                .path("banner/")
-//                .path(dbFile.getId())
-//                .toUriString();
-//
-//        return new UploadResponse(dbFile.getFileName(), fileDownloadUri,
-//                file.getContentType(), file.getSize());
-//    }
-    
     @PostMapping("/uploadMultipleImageFiles")
     public List<UploadResponse> uploadMultipleFiles(@RequestParam("files") MultipartFile[] files) {
         return Arrays.asList(files)
@@ -80,9 +66,6 @@ public class ImageFileController {
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + dbFile.getFileName() + "\"")
                 .body(new ByteArrayResource(dbFile.getData()));
     }
-    
-    
-
 
 
 }

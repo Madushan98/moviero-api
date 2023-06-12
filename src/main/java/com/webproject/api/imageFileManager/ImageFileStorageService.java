@@ -5,7 +5,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.webproject.api.entity.ImageFileData;
 import com.webproject.api.exceptions.FileNotFoundException;
 import com.webproject.api.exceptions.FileStorageException;
 import com.webproject.api.repository.ImageFileRepository;
@@ -19,18 +18,16 @@ public class ImageFileStorageService {
     private ImageFileRepository imageFileRepository;
 
     public ImageFileData storeFile(MultipartFile file) {
-      
+
         String fileName = StringUtils.cleanPath(file.getOriginalFilename());
-       
-        
-        
-        String filetype = file.getContentType() ;
-        
-      
-        
+
+
+        String filetype = file.getContentType();
+
+
         try {
-          
-            if(fileName.contains("..")) {
+
+            if (fileName.contains("..")) {
                 throw new FileStorageException("Sorry! Filename contains invalid path sequence " + fileName);
             }
 

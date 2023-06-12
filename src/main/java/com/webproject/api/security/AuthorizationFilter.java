@@ -23,52 +23,52 @@ import io.jsonwebtoken.Jwts;
 
 public class AuthorizationFilter extends BasicAuthenticationFilter {
 
-	public AuthorizationFilter(AuthenticationManager authManager) {
-		super(authManager);
-	}
+    public AuthorizationFilter(AuthenticationManager authManager) {
+        super(authManager);
+    }
 
-	@Override
-	protected void doFilterInternal(HttpServletRequest req, HttpServletResponse res, FilterChain chain)
-			throws IOException, ServletException {
+    @Override
+    protected void doFilterInternal(HttpServletRequest req, HttpServletResponse res, FilterChain chain)
+            throws IOException, ServletException {
 
-		String header = req.getHeader(SecurityConstants.HEADER_STRING);
+        String header = req.getHeader(SecurityConstants.HEADER_STRING);
 
-		if (header == null || !header.startsWith(SecurityConstants.TOKEN_PREFIX)) {
-			chain.doFilter(req, res);
-			return;
-		}
+        if (header == null || !header.startsWith(SecurityConstants.TOKEN_PREFIX)) {
+            chain.doFilter(req, res);
+            return;
+        }
 
-		UsernamePasswordAuthenticationToken authentication = getAuthentication(req);
-		SecurityContextHolder.getContext().setAuthentication(authentication);
-		chain.doFilter(req, res);
-	}
+        UsernamePasswordAuthenticationToken authentication = getAuthentication(req);
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+        chain.doFilter(req, res);
+    }
 
-	private UsernamePasswordAuthenticationToken getAuthentication(HttpServletRequest request) {
-		String token = request.getHeader(SecurityConstants.HEADER_STRING);
+    private UsernamePasswordAuthenticationToken getAuthentication(HttpServletRequest request) {
+        String token = request.getHeader(SecurityConstants.HEADER_STRING);
 
-		if (token != null) {
+        if (token != null) {
 
-			token = token.replace(SecurityConstants.TOKEN_PREFIX, "");
+            token = token.replace(SecurityConstants.TOKEN_PREFIX, "");
 
-			String user = Jwts.parser().setSigningKey(SecurityConstants.TOKEN_SECRET).parseClaimsJws(token).getBody()
-					.getSubject();
-			
-			final Claims claims =Jwts.parser().setSigningKey(SecurityConstants.TOKEN_SECRET).parseClaimsJws(token).getBody() ;
-			
-			final List<SimpleGrantedAuthority> authorities =
-	                Arrays.stream(claims.get(SecurityConstants.TOKEN_SECRET).toString().split(","))
-	                        .map(SimpleGrantedAuthority::new)
-	                        .collect(Collectors.toList());
-			
+            String user = Jwts.parser().setSigningKey(SecurityConstants.TOKEN_SECRET).parseClaimsJws(token).getBody()
+                    .getSubject();
 
-			if (user != null) {
-				return new UsernamePasswordAuthenticationToken(user, null, authorities);
-			}
+            final Claims claims = Jwts.parser().setSigningKey(SecurityConstants.TOKEN_SECRET).parseClaimsJws(token).getBody();
 
-			return null;
-		}
+            final List<SimpleGrantedAuthority> authorities =
+                    Arrays.stream(claims.get(SecurityConstants.TOKEN_SECRET).toString().split(","))
+                            .map(SimpleGrantedAuthority::new)
+                            .collect(Collectors.toList());
 
-		return null;
-	}
+
+            if (user != null) {
+                return new UsernamePasswordAuthenticationToken(user, null, authorities);
+            }
+
+            return null;
+        }
+
+        return null;
+    }
 
 }

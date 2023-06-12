@@ -4,7 +4,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.context.annotation.Bean;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -15,65 +14,70 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
-import com.webproject.api.userLayer.UserService;
-
-
+import com.webproject.api.user.UserService;
 
 
 @EnableWebSecurity
 public class WebSecurity extends WebSecurityConfigurerAdapter {
 
-	  private final UserService userDetailsService; 
-	  
-	    private final BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final UserService userDetailsService;
 
-	    public WebSecurity(UserService userDetailsService, BCryptPasswordEncoder bCryptPasswordEncoder) {
-	        this.userDetailsService = userDetailsService;
-	        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
-	    }
-	    
-	    @Override
-	    protected void configure(HttpSecurity http) throws Exception { 
-	        http
-	        .cors().and()
-	        .csrf().disable()
-	      
-	        .authorizeRequests()
-	       // .antMatchers(HttpMethod.POST, SecurityConstants.SIGN_UP_URL).permitAll()
-	        .antMatchers("/file/download/*",SecurityConstants.SIGN_UP_URL).permitAll()
-	        .antMatchers("/admin/**").hasRole("ADMIN")
-	        .anyRequest().authenticated().and().addFilter(getAuthenticationFilter())
-	        .addFilter(new AuthorizationFilter(authenticationManager()))
-	        .sessionManagement()
-	        .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-	    }
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
-	    @Override
-	    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-	        auth.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder);
-	    }
-	    
-	    
-	    protected AuthenticationFilter getAuthenticationFilter() throws Exception {
-		    final AuthenticationFilter filter = new AuthenticationFilter(authenticationManager());
-		    filter.setFilterProcessesUrl("/users/login");
-		    return filter;
-		}
-//	    
-	    @Bean
-	    public CorsConfigurationSource corsConfigurationSource()
-	    {
-	    	final CorsConfiguration configuration = new CorsConfiguration();
-	    
-	    	configuration.setAllowedOrigins(List.of("http://localhost:3000","https://you.server.domain.com","http://localhost:3001"));
-	    	configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE","OPTIONS"));
-	    	configuration.setAllowCredentials(true);
-	    	configuration.setAllowedHeaders(Arrays.asList("*"));
-	    	configuration.setExposedHeaders(Arrays.asList("Authorization","UserID"));
-	    	final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-	    	source.registerCorsConfiguration("/**", configuration);
-	    	
-	    	return source;
-	    }
+    public WebSecurity(UserService userDetailsService, BCryptPasswordEncoder bCryptPasswordEncoder) {
+        this.userDetailsService = userDetailsService;
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+    }
+
+    private static final String[] AUTH_WHITE_LIST = {
+            "/v3/api-docs/**",
+            "/swagger-ui/**",
+            "/v2/api-docs/**",
+            "/swagger-resources/**"
+    };
+
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http
+                .cors().and()
+                .csrf().disable()
+
+                .authorizeRequests()
+                .antMatchers(AUTH_WHITE_LIST).permitAll()
+                .antMatchers("/file/download/*", SecurityConstants.SIGN_UP_URL).permitAll()
+                .antMatchers("/admin/**").hasRole("ADMIN")
+                .anyRequest().authenticated().and().addFilter(getAuthenticationFilter())
+                .addFilter(new AuthorizationFilter(authenticationManager()))
+                .sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+    }
+
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder);
+    }
+
+
+    protected AuthenticationFilter getAuthenticationFilter() throws Exception {
+        final AuthenticationFilter filter = new AuthenticationFilter(authenticationManager());
+        filter.setFilterProcessesUrl("/users/login");
+        return filter;
+    }
+
+    //
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        final CorsConfiguration configuration = new CorsConfiguration();
+
+        configuration.setAllowedOrigins(List.of("http://localhost:3000", "https://you.server.domain.com", "http://localhost:3001"));
+        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+        configuration.setAllowCredentials(true);
+        configuration.setAllowedHeaders(Arrays.asList("*"));
+        configuration.setExposedHeaders(Arrays.asList("Authorization", "UserID"));
+        final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+
+        return source;
+    }
 
 }
