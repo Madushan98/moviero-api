@@ -22,114 +22,93 @@ import com.webproject.api.movie.Movie;
 @Table(name = "cart")
 public class Cart {
 
-	public Cart() {
-		Total = 0.00;
-		inCart = new ArrayList<Movie>();
-	}
+    public Cart() {
+        Total = 0.00;
+        inCart = new ArrayList<Movie>();
+    }
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "id")
-	private Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id")
+    private Long id;
 
-	@OneToOne(mappedBy = "cart")
-	@JsonIgnoreProperties(value = { "cart", "handler", "hibernateLazyInitializer" }, allowSetters = true)
-	private UserModel user;
+    @OneToOne(mappedBy = "cart")
+    @JsonIgnoreProperties(value = {"cart", "handler", "hibernateLazyInitializer"}, allowSetters = true)
+    private UserModel user;
 
-	@ManyToMany()
-	@JoinTable(name = "movie_incart", joinColumns = @JoinColumn(name = "movieId"), inverseJoinColumns = @JoinColumn(name = "cartId"))
-	private List<Movie> inCart;
+    @ManyToMany()
+    @JoinTable(name = "movie_incart", joinColumns = @JoinColumn(name = "movieId"), inverseJoinColumns = @JoinColumn(name = "cartId"))
+    private List<Movie> inCart;
 
-	@Column(nullable = false)
-	private Double Total;
+    @Column(nullable = false)
+    private Double Total;
 
-	public UserModel getUser() {
-		return user;
-	}
+    public UserModel getUser() {
+        return user;
+    }
 
-	public void setUser(UserModel user) {
-		this.user = user;
-	}
+    public void setUser(UserModel user) {
+        this.user = user;
+    }
 
-	public Double getTotal() {
-		return Total;
-	}
+    public Double getTotal() {
+        return Total;
+    }
 
-	public List<Movie> getInCart() {
-		return inCart;
-	}
+    public List<Movie> getInCart() {
+        return inCart;
+    }
 
-	public void setInCart(List<Movie> inCart) {
-		this.inCart = inCart;
-	}
+    public void setInCart(List<Movie> inCart) {
+        this.inCart = inCart;
+    }
 
-	public void addToCart(Movie movie) {
-		inCart.add(movie);
-	}
+    public void addToCart(Movie movie) {
+        inCart.add(movie);
+    }
 
-	public Double addToTotal(Double moviePrice) {
+    public void addToTotal(Double moviePrice) {
+        this.Total += moviePrice;
+    }
 
-		this.Total += moviePrice;
+    public Long getId() {
+        return id;
+    }
 
-		return Total;
-	}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	public Long getId() {
-		return id;
-	}
+    public Boolean isMovieInCart(String movieId) {
+        for (Movie movie : this.inCart) {
+            String id = movie.getMovieId();
+            if (id.equals(movieId)) {
+                return true;
+            }
+        }
+        return false;
+    }
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    public void removefromCart(String movieId) {
+        List<Movie> newCart = new ArrayList<>();
+        for (Movie movie : this.inCart) {
+            String id = movie.getMovieId();
+            if (!id.equals(movieId)) {
+                newCart.add(movie);
+            } else {
+                this.Total -= movie.getMoviePrice();
+            }
+        }
+        this.inCart = newCart;
+    }
 
-	public Boolean isMovieInCart(String movieId) {
+    public void setTotal(Double total) {
+        Total = total;
+    }
 
-		for (Movie movie : this.inCart) {
+    public void removeFromTotal(Double moviePrice) {
 
-			String id = movie.getMovieId();
+        this.Total -= moviePrice;
 
-			if (id.equals(movieId)) {
-				
-				return true;
-			}
-
-		}
-
-		return false;
-
-	}
-
-	public void removefromCart(String movieId) {
-
-		List<Movie> newCart = new ArrayList<>();
-
-		for (Movie movie : this.inCart) {
-
-			String id = movie.getMovieId();
-
-			if (!id.equals(movieId)) {
-				
-				newCart.add(movie);
-
-			}else {
-				
-				this.Total -= movie.getMoviePrice() ;
-			}
-
-		}
-
-		this.inCart = newCart;
-
-	}
-
-	public void setTotal(Double total) {
-		Total = total;
-	}
-
-	public Double removeFromTotal(Double moviePrice) {
-
-		this.Total -= moviePrice;
-
-		return Total;
-	}
+    }
 }

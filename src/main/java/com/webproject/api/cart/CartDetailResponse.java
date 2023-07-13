@@ -6,35 +6,33 @@ import com.webproject.api.movie.MovieDetailsResponse;
 
 public class CartDetailResponse {
 
-	private Double Total;
+    private Double Total;
 
-	private List<MovieDetailsResponse> moviesInCart;
+    private List<MovieDetailsResponse> moviesInCart;
 
-	private String userId  ;
-	
-	public String getUserId() {
-		return userId;
-	}
+    private String userId;
 
-	public void setUserId(String userId) {
-		this.userId = userId;
-	}
+    public String getUserId() {
+        return userId;
+    }
 
-	public List<MovieDetailsResponse> getMoviesInCart() {
-		return moviesInCart;
-	}
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
 
-	public void setMoviesInCart(List<MovieDetailsResponse> moviesInCart) {
-		this.moviesInCart = moviesInCart;
-	}
+    public List<MovieDetailsResponse> getMoviesInCart() {
+        return moviesInCart;
+    }
 
-	public Double getTotal() {
-		return Total;
-	}
+    public void setMoviesInCart(List<MovieDetailsResponse> moviesInCart) {
+        this.moviesInCart = moviesInCart;
+    }
 
-	public void setTotal(Double total) {
-		Total = total;
+    public Double getTotal() {
+        return Total;
+    }
 
-	}
-
+    public void setTotal(Double total) {
+        Total = total;
+    }
 }
