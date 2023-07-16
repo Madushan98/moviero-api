@@ -53,8 +53,6 @@ public class UserServiceImplementation implements UserService {
 
 		userEntity.setUserId(userId);
 		userEntity.setEncryptedPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-		
-		
 
 		if(roleRepository.count() == 0){
 			Role customer = new Role();
@@ -65,22 +63,15 @@ public class UserServiceImplementation implements UserService {
 			roleRepository.save(admin);
 			roleRepository.save(customer);	
 		}
-		
-		
-	
+
 		List<Role> roleList = new ArrayList<Role>();
-		
-	
 
 		roleList.add(roleRepository.getRoleByName("ROLE_CUSTOMER"));
-		roleList.add(roleRepository.getRoleByName("ROLE_ADMIN"));  //only for development to show the admin side when initializing every user gets admin acess
-		
-		
-		
+		roleList.add(roleRepository.getRoleByName("ROLE_ADMIN"));
+		//only for development to show the admin side when
+		// initializing every user gets admin access
+
 		userEntity.setRoles(roleList);
-		
-		
-		
 		UserModel storedUser = userRepository.save(userEntity);
 
 		UserDto returnUser = new UserDto();
